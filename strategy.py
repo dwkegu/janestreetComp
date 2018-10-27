@@ -1,5 +1,8 @@
 def strategy_simple(priv_m, book, *arg, **kargs):
-    return strategy_for_BOND(priv_m, book["BOND"])
+    if "BOND" in book:
+        return strategy_for_BOND(priv_m, book["BOND"])
+    else:
+        return None
 
 def vwap(priv_m, book):
     if book is None:
