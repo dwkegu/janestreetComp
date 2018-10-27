@@ -11,9 +11,12 @@ import sys
 import socket
 import json
 from datetime import datetime, timedelta
+import random
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
+from ServerMarket import ServerMessage
+from manipulate import PrivateBot
 from strategy import strategy_simple
 
 team_name="Lotad"
@@ -44,7 +47,20 @@ def write_to_exchange(exchange, obj):
 def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
-def exchange_stock(strategy):
+def get_order_id():
+    now = datetime.now().strftime("%Y%m%d%H%M")
+    return now+random.randint(0, 100000)
+
+def exchange_stock(exchange, strategy):
+    cur_order = {}
+    for item in strategy:
+        cur_order[item] = {}
+        for sto_item in strategy[item]:
+            cur_order[item][sto_item] = {}
+            t_id = get_order_id()
+            cur_order[item][sto_item]["id"] = t_id
+            cur_order[item][sto_item]["info"] = strategy[item][sto_item]
+            write_to_exchange(exchange, {"type":"add", "symbol":item, "order_id": t_id, "dir":str(sto_item).upper(), "price": strategy[item][sto_item][0], "size": strategy[item][sto_item][1]})
     pass
 
 
@@ -58,23 +74,16 @@ def main():
     c = 0
     while c<10:
         c += 1
-        tm = datetime.now()
-        while(tm + td > datetime.now()):
-            hello_from_exchange = read_from_exchange(exchange)
-            if hello_from_exchange["type"] == "book":
-                books["symbol"] = {}
-                books["symbol"]["sell"] = hello_from_exchange["sell"]
-                books["symbol"]["buy"] = hello_from_exchange["buy"]
-            # A common mistake people make is to call write_to_exchange() > 1
-            # time for every read_from_exchange() response.
-            # Since many write messages generate marketdata, this will cause an
-            # exponential explosion in pending messages. Please, don't do that!
-            print("The exchange replied:", hello_from_exchange, file=sys.stderr)
-        my_stra = strategy_simple(books)
+        sm = ServerMessage(exchange)
+        priv_msg = PrivateBot()
+        books, trades, open = sm.get_current_book(1)
+        print(len(trades))
+        my_stra = strategy_simple(priv_msg, books)
         if my_stra is None:
             continue
         else:
-            exchange_stock(my_stra)
+            # exchange_stock(exchange, my_stra)
+            pass
     exchange.close()
 
 if __name__ == "__main__":
