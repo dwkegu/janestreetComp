@@ -71,11 +71,11 @@ class ServerMessage(object):
                     'price': r['price'],
                     'size': r['size']
                 }
+                self.total_trade.append(trades)
             if r['type'] == 'open':
                 opens = r['symbols']
             if r['type'] == 'close':
                 closes = r['symbols']
-            self.total_trade.append(trades)
         return ret, trades, opens, closes
 
     def get_history_trade(self):
