@@ -10,13 +10,16 @@ from __future__ import print_function
 import sys
 import socket
 import json
+from datetime import datetime, timedelta
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
+from strategy import strategy_simple
+
 team_name="Lotad"
 # This variable dictates whether or not the bot is connecting to the prod
 # or test exchange. Be careful with this switch!
-test_mode = False
+test_mode = True
 
 # This setting changes which test exchange is connected to.
 # 0 is prod-like
@@ -39,7 +42,7 @@ def write_to_exchange(exchange, obj):
     exchange.write("\n")
 
 def read_from_exchange(exchange):
-    return json.loads(exchange.readlines())
+    return json.loads(exchange.readline())
 
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
@@ -47,14 +50,28 @@ def read_from_exchange(exchange):
 def main():
     exchange = connect()
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
-    while(exchange.readable()):
-        hello_from_exchange = read_from_exchange(exchange)
+    td = timedelta()
+    books = {}
+    c = 0
+    while c<10:
+        c += 1
+        tm = datetime.now()
+        while(tm + td > datetime.now()):
+            hello_from_exchange = read_from_exchange(exchange)
+            if hello_from_exchange["type"] == "book":
+                books["symbol"] = {}
+                books["symbol"]["sell"] = hello_from_exchange["sell"]
+                books["symbol"]["buy"] = hello_from_exchange["buy"]
+            # A common mistake people make is to call write_to_exchange() > 1
+            # time for every read_from_exchange() response.
+            # Since many write messages generate marketdata, this will cause an
+            # exponential explosion in pending messages. Please, don't do that!
+            print("The exchange replied:", hello_from_exchange, file=sys.stderr)
+        my_stra = strategy_simple(books)
+        if my_stra is None:
+            continue
+        else:
 
-        # A common mistake people make is to call write_to_exchange() > 1
-        # time for every read_from_exchange() response.
-        # Since many write messages generate marketdata, this will cause an
-        # exponential explosion in pending messages. Please, don't do that!
-        print("The exchange replied:", hello_from_exchange, file=sys.stderr)
     exchange.close()
 
 if __name__ == "__main__":
