@@ -53,7 +53,7 @@ def exchange_stock(strategy):
 def main():
     exchange = connect()
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
-    td = timedelta()
+    td = timedelta(seconds=1)
     books = {}
     c = 0
     while c<10:
