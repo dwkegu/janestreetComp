@@ -59,6 +59,7 @@ class ServerMessage(object):
         ret = {}
         trades = {}
         opens = []
+        closes = []
         for r in result:
             if r['type'] == 'book':
                 ret[r['symbol']] = {
@@ -71,9 +72,11 @@ class ServerMessage(object):
                     'size': r['size']
                 }
             if r['type'] == 'open':
-                opens.append(r['symbols'])
-        self.total_trade.append(trades)
-        return ret, trades, opens
+                opens = r['symbols']
+            if r['type'] == 'close':
+                closes = r['symbols']
+            self.total_trade.append(trades)
+        return ret, trades, opens, closes
 
     def get_history_trade(self):
         return self.total_trade

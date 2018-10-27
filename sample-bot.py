@@ -16,7 +16,7 @@ import random
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
 from ServerMarket import ServerMessage
-from manipulate import PrivateBot
+from manipulate import PrivateBot, Manipulate
 from strategy import strategy_simple
 
 team_name="Lotad"
@@ -70,20 +70,19 @@ def main():
     exchange = connect()
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
     td = timedelta(seconds=1)
-    books = {}
     c = 0
+    sm = ServerMessage(exchange)
+    priv_msg = Manipulate(None, exchange)
     while c<10:
         c += 1
-        sm = ServerMessage(exchange)
-        priv_msg = PrivateBot()
-        books, trades, open = sm.get_current_book(2)
+        books, trades, open = sm.get_current_book(4)
         print(books.keys())
         print(len(trades))
         my_stra = strategy_simple(priv_msg, books)
         if my_stra is None:
             continue
         else:
-            # exchange_stock(exchange, my_stra)
+            priv_msg.trade_process(my_stra["buy"], my_stra["sell"], time_out=5)
             pass
     exchange.close()
 
