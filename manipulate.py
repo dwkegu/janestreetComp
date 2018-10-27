@@ -109,7 +109,7 @@ class Manipulate(PrivateBot):
         # algorithm
 
     @property
-    def pnl(self):
+    def pnl_real(self):
         """
         calculate the pnl in current state
         :return:
