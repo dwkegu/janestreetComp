@@ -95,6 +95,7 @@ def get_his():
     priv_msg = Manipulate(None, exchange)
     books, trades, open_, close = sm.get_current_book(20)
     trades = sm.get_history_trade()
+    print(trades)
     stas ={}
     for trade in trades:
         for item in trade:

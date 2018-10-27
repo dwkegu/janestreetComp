@@ -16,8 +16,8 @@
       <file leaf-file-name="sample-bot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sample-bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="104" column="27" lean-forward="false" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
+            <state relative-caret-position="287">
+              <caret line="97" column="16" lean-forward="false" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
               <folding>
                 <element signature="e#222#259#0" expanded="true" />
               </folding>
@@ -247,8 +247,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sample-bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="104" column="27" lean-forward="false" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
+        <state relative-caret-position="287">
+          <caret line="97" column="16" lean-forward="false" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
           <folding>
             <element signature="e#222#259#0" expanded="true" />
           </folding>
