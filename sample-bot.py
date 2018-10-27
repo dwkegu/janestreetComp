@@ -79,6 +79,7 @@ def main():
         print(books.keys())
         print(len(trades))
         my_stra = strategy_simple(priv_msg, books)
+        print(my_stra)
         if my_stra is None:
             continue
         else:

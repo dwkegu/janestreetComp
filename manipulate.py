@@ -63,7 +63,7 @@ class Manipulate(PrivateBot):
         pass
 
     def add_operation(self, buy_dict, sell_dict, time_out=2):
-        buy_dict, sell_dict = {}, {}
+        # buy_dict, sell_dict = {}, {}
         for key in buy_dict:
             # no manipulation
             if buy_dict[key][1] == 0:
@@ -135,7 +135,7 @@ class Manipulate(PrivateBot):
         return json.loads(exchange.readline())
 
     def _process_message(self, message):
-        if message['type'] in ['book', 'open', 'trade', 'ack']:
+        if message['type'] in ['book', 'open', 'close', 'trade', 'ack']:
             return
         elif message['type'] == 'reject':
             del self.trade_dict[message['order_id']]
