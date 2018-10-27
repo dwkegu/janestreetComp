@@ -39,7 +39,7 @@ def write_to_exchange(exchange, obj):
     exchange.write("\n")
 
 def read_from_exchange(exchange):
-    return json.loads(exchange.readline())
+    return json.loads(exchange.readlines())
 
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
