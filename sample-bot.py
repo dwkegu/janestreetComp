@@ -93,7 +93,7 @@ def get_his():
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
     sm = ServerMessage(exchange)
     priv_msg = Manipulate(None, exchange)
-    books, trades, open, close = sm.get_current_book(20)
+    books, trades, open_, close = sm.get_current_book(20)
     trades = sm.get_history_trade()
     stas ={}
     for trade in trades:
@@ -102,7 +102,7 @@ def get_his():
                stas[item].append(trade[item]["price"])
            else:
                stas[item] = [trade[item]["price"]]
-    with open("~/psfpy/stas.json", 'w', encode="utf-8") as f:
+    with open("~/psfpy/stas.json", 'w', encoding="utf-8") as f:
         json.dump(stas, f)
 
 if __name__ == "__main__":
