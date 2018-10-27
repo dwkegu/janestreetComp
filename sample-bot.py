@@ -99,9 +99,9 @@ def get_his():
     for trade in trades:
         for item in trade:
            if item in stas:
-               stas[item].append(trade[item][0])
+               stas[item].append(trade[item]["price"])
            else:
-               stas[item] = [trade[item][0]]
+               stas[item] = [trade[item]["price"]]
     with open("~/psfpy/stas.json", 'w', encode="utf-8") as f:
         json.dump(stas, f)
 
