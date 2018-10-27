@@ -75,7 +75,7 @@ def main():
     priv_msg = Manipulate(None, exchange)
     while c<10:
         c += 1
-        books, trades, open = sm.get_current_book(4)
+        books, trades, open, close = sm.get_current_book(4)
         print(books.keys())
         print(len(trades))
         my_stra = strategy_simple(priv_msg, books)
@@ -83,6 +83,7 @@ def main():
             continue
         else:
             priv_msg.trade_process(my_stra["buy"], my_stra["sell"], time_out=5)
+            priv_msg.print_all()
             pass
     exchange.close()
 
