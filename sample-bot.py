@@ -102,7 +102,7 @@ def get_his():
                stas[item].append(trade[item]["price"])
            else:
                stas[item] = [trade[item]["price"]]
-    with open("~/psfpy/stas.json", 'w', encoding="utf-8") as f:
+    with open("/home/ubuntu/psfpy/stas.json", 'w', encoding="utf-8") as f:
         json.dump(stas, f)
 
 if __name__ == "__main__":
