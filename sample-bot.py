@@ -93,7 +93,7 @@ def get_his():
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
     sm = ServerMessage(exchange)
     priv_msg = Manipulate(None, exchange)
-    books, trades, open_, close = sm.get_current_book(20)
+    books, trades, open_, close = sm.get_current_book(100)
     trades = sm.get_history_trade()
     print(trades)
     stas ={}
