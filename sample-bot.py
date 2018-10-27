@@ -44,6 +44,9 @@ def write_to_exchange(exchange, obj):
 def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
+def exchange_stock(strategy):
+    pass
+
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -71,7 +74,7 @@ def main():
         if my_stra is None:
             continue
         else:
-
+            exchange_stock(my_stra)
     exchange.close()
 
 if __name__ == "__main__":
