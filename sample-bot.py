@@ -77,6 +77,7 @@ def main():
         sm = ServerMessage(exchange)
         priv_msg = PrivateBot()
         books, trades, open = sm.get_current_book(1)
+        print(books)
         print(len(trades))
         my_stra = strategy_simple(priv_msg, books)
         if my_stra is None:
