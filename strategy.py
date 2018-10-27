@@ -29,4 +29,4 @@ def strategy_for_BOND(priv_m, book, *arg, **kwargs):
         sorted_buy = sorted(book["buy"])
         my_sell = sorted_buy[-1]
         my_buy[1] = min(my_sell[1], priv_m.limit_dict["bond"] + priv_m.bond)
-    return {"BOUND":{"buy": my_buy, "sell": my_sell}}
+    return {"buy":{"BOND":my_buy,}, "sell":{"BOND":my_sell}}
