@@ -78,7 +78,7 @@ def main():
         books, trades, open, close = sm.get_current_book(4)
         print(books.keys())
         print(len(trades))
-        my_stra = strategy_simple(priv_msg, books)
+        my_stra = strategy_simple(priv_msg, books, trades)
         print(my_stra)
         if my_stra is None:
             continue
@@ -88,5 +88,22 @@ def main():
             pass
     exchange.close()
 
+def get_his():
+    exchange = connect()
+    write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
+    sm = ServerMessage(exchange)
+    priv_msg = Manipulate(None, exchange)
+    books, trades, open, close = sm.get_current_book(20)
+    trades = sm.get_history_trade()
+    stas ={}
+    for trade in trades:
+        for item in trade:
+           if item in stas:
+               stas[item].append(trade[item][0])
+           else:
+               stas[item] = [trade[item][0]]
+    with open("~/psfpy/stas.json", 'w', encode="utf-8") as f:
+        json.dump(stas, f)
+
 if __name__ == "__main__":
-    main()
+    get_his()
